@@ -7,7 +7,7 @@ const cookieSession = require('cookie-session')
 var logger = require('morgan');
 const cors = require('cors')
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/customers');
+var usersRouter = require('./routes/user');
 const { initialize } = require('express-openapi');
 const swaggerUi = require('swagger-ui-express');
 const mongoose = require('mongoose')
@@ -29,7 +29,7 @@ app.use(cookieSession({
   app.set('view engine', 'ejs');
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/', indexRouter);
+app.use('/admin', indexRouter);
 app.use('/', usersRouter);
 
 mongoose.set('strictQuery', false);

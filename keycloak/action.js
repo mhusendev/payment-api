@@ -2,17 +2,12 @@ var axios = require('axios');
 const { json } = require('body-parser');
 var qs = require('qs');
 
-const config = {
-    client_id: 'payment',
-    client_secret: 'ErwgeBLn9Xsdz4hB460jWJg2DOyKcbfY'
-}
-
 const authKeycloack = async (token) => {
     var value;
     var data = qs.stringify({
         'token': token,
-        'client_id': config.client_id,
-        'client_secret': config.client_secret
+        'client_id': 'mallada',
+        'client_secret': 'k3gGjmTtLHfBViYunEIAVqCY9hKrbj6q'
     });
     var config = {
         method: 'post',
@@ -31,6 +26,7 @@ const authKeycloack = async (token) => {
                 value = false
                 // console.log(value)
             } else {
+                // console.log(hasil)
                 value = true
 
             }
@@ -43,7 +39,8 @@ const authKeycloack = async (token) => {
 
     return value
 }
-const getToken = async (reftoken) => {
+const getToken = async (req,reftoken) => {
+  
     var value;
     // console.log(reftoken)
     var data = qs.stringify({
@@ -60,45 +57,83 @@ const getToken = async (reftoken) => {
         },
         data: data
     };
+    // console.log(JSON.stringify(config))
     await axios(config)
         .then((response) => {
-            value = response.data
-            // console.log(value.status)
-            // console.log(value)
+            value = true
+            // console.log(response)
+            let token = response.data
+
+            // console.log(response.status)
+            //    console.log(token.status)
+            if (response.status == 400) {
+                value = false
+            } else {
+                //   console.log(req.session)
+                // console.log(response.data)
+                req.session = {
+                    passport: {
+                        user: {
+                            access_token: token.access_token,
+                            refresh_token: token.refresh_token
+                        }
+                    }
+                }
+                // console.log(req.session)
+            }
 
         })
         .catch((error) => {
 
             //   res.sendStatus(401)
-            value = error.response
+            value = false
             // console.log(error)
         });
 
     return value
 }
-const getInfo = async (req, reftoken) => {
+
+const checkToken = async (access_token) => {
+    var value;
+    var data = qs.stringify({
+        'token': access_token,
+        'client_id': 'mallada',
+        'client_secret': 'k3gGjmTtLHfBViYunEIAVqCY9hKrbj6q'
+    });
+    var config = {
+        method: 'post',
+        url: 'https://keycloak.cws.co.id/realms/mallada/protocol/openid-connect/token/introspect',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: data
+    };
+
+    await axios(config)
+        .then((response) => {
+            let hasil = response.data;
+
+            value = hasil.active
+        })
+        .catch((error) => {
+            console.log(error);
+            value = false
+            //   res.sendStatus(401)
+        });
+
+    return value
+}
+
+const getInfo = async (access_token) => {
     var value;
     //    console.log(reftoken)
-    var token = await getToken(reftoken)
-    //    console.log(token)
-    if (token.status == 400) {
-        value = { status: 401, value: "token not valid" }
-    } else {
-        //   console.log(req.session)
-        req.session = {
-            passport: {
-                user: {
-                    access_token: token.access_token,
-                    refresh_token: token.refresh_token
-                }
-            }
-        }
+ 
         var config = {
             method: 'GET',
             url: 'https://keycloak.cws.co.id/realms/mallada/protocol/openid-connect/userinfo',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token.access_token
+                'Authorization': 'Bearer ' + access_token
             },
 
         };
@@ -117,7 +152,7 @@ const getInfo = async (req, reftoken) => {
                 value = error.response
             });
 
-    }
+    
 
 
     return value
@@ -271,7 +306,7 @@ const register = async (data) => {
     await axios(config)
         .then((response) => {
             value = response
-            console.log(response)
+            // console.log(response)
         })
         .catch((error) => {
             // console.log(error)
@@ -286,10 +321,8 @@ const update_attribute = async (data) => {
     var value
     var sendata
     if (data != null) {
-        if (data.attr != null) {
+        if (data.hasOwnProperty('attr')) {
             sendata = {
-                firstName: data.firstName,
-                lastName: data.lastName,
                 attributes: {
                     alamat_info: JSON.stringify(data.attr.alamat_info),
                     birth: JSON.stringify(data.attr.birth),
@@ -388,5 +421,6 @@ module.exports = {
     logOut, 
     getInfo, 
     update_attribute,
+    getToken,
     find_Email_token_valid,
     SearchEmail }
