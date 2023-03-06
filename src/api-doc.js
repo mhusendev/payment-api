@@ -1,15 +1,9 @@
-
+const account_register = require('./schemas/account/account_register')
+const account_info = require('./schemas/account/account_info')
 const apiDoc = {
   swagger: "2.0",
-  basePath:"/api/auth/v1/",
-  tags: [{
-    name: "users",
-    description: "The Users Managing API"
-  },
-  {
-    name: "users address",
-    description: "API"
-  }],
+  basePath:"/api/payment/v1/",
+ 
   info: {
     title: "Keycloak app API.",
     version: "1.0.0",
@@ -27,5 +21,7 @@ const apiDoc = {
   paths: {}
 
 };
+apiDoc.definitions['account_register'] = account_register
+apiDoc.definitions['account_info'] = account_info
 
 module.exports = apiDoc;

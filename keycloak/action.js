@@ -2,6 +2,12 @@ var axios = require('axios');
 const { json } = require('body-parser');
 var qs = require('qs');
 
+
+
+
+// let data = encrypt(salt1,'username + password',salt2)
+
+
 const authKeycloack = async (token) => {
     var value;
     var data = qs.stringify({
@@ -285,11 +291,11 @@ const register = async (data) => {
         credentials: data.credentials,
         groups: [],
         attributes: {
-            alamat_info: JSON.stringify(data.attributes.alamat_info),
-            birth: JSON.stringify(data.attributes.birth),
-            phone: data.attributes.phone,
-            gender:data.attributes.gender,
-            image:JSON.stringify({baseurl:"",file_name:"", ext_file:""})
+           app_code: data.attributes.app_code,
+           app_name:data.attributes.app_name,
+           contact:JSON.stringify(data.attributes.contact),
+           date_created:data.attributes.date_created,
+           url_notification: data.attributes.url_notification                          
           
         }
     }

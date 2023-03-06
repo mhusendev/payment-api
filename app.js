@@ -48,17 +48,17 @@ initialize({
     paths:"./src/api/"
 })
 app.use(
-    "/api/auth/v1/api-documentation",
+    "/api/payment/v1/api-documentation",
     swaggerUi.serve,
-    (req, res,next) => {
-      if(req.session.isNew) {
-        res.send("Dokumentasi hanya untuk yang memiliki otorisasi sebagai developer")
-      }
-      next()
-   },
+  //   (req, res,next) => {
+  //     if(req.session.isNew) {
+  //       res.send("Dokumentasi hanya untuk yang memiliki otorisasi sebagai developer")
+  //     }
+  //     next()
+  //  },
     swaggerUi.setup(null,{
       swaggerOptions: {
-        url: "http://localhost:3000/api/auth/v1/api-docs",
+        url: "http://localhost:3001/api/payment/v1/api-docs",
       },
     }),
   );

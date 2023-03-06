@@ -15,7 +15,7 @@ module.exports = function () {
 
 
     GET.apiDoc = {
-      tags: ['Auth'],
+      tags: ['Authorize'],
       description:'Middleware for Authorization',
       summary: "Authorized your apps.",
       operationId: "getAuth",
