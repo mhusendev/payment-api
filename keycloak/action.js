@@ -5,7 +5,7 @@ var qs = require('qs');
 
 
 
-// let data = encrypt(salt1,'username + password',salt2)
+
 
 
 const authKeycloack = async (token) => {
@@ -46,59 +46,74 @@ const authKeycloack = async (token) => {
     return value
 }
 const getToken = async (req,reftoken) => {
-  
-    var value;
-    // console.log(reftoken)
-    var data = qs.stringify({
-        'refresh_token': reftoken,
-        'client_id': 'mallada',
-        'client_secret': 'k3gGjmTtLHfBViYunEIAVqCY9hKrbj6q',
-        'grant_type': 'refresh_token'
-    });
-    var config = {
-        method: 'post',
-        url: 'https://keycloak.cws.co.id/realms/mallada/protocol/openid-connect/token',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        data: data
-    };
-    // console.log(JSON.stringify(config))
-    await axios(config)
-        .then((response) => {
-            value = true
-            // console.log(response)
-            let token = response.data
-
-            // console.log(response.status)
-            //    console.log(token.status)
-            if (response.status == 400) {
-                value = false
-            } else {
-                //   console.log(req.session)
-                // console.log(response.data)
-                req.session = {
-                    passport: {
-                        user: {
-                            access_token: token.access_token,
-                            refresh_token: token.refresh_token
+    //    let session = await req.session
+        var value;
+        // console.log(reftoken)
+        var data = qs.stringify({
+            'refresh_token': reftoken,
+            'client_id': 'mallada',
+            'client_secret': 'k3gGjmTtLHfBViYunEIAVqCY9hKrbj6q',
+            'grant_type': 'refresh_token'
+        });
+        var config = {
+            method: 'post',
+            url: 'https://keycloak.cws.co.id/realms/mallada/protocol/openid-connect/token',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: data
+        };
+        // console.log(JSON.stringify(config))
+        await axios(config)
+            .then((response) => {
+                
+                // console.log(response)
+                let token = response.data
+                 
+                // console.log(response.status)
+                //    console.log(token.status)
+                if (response.status == 400) {
+                    value ={status: false, session: req.session }
+                } else {
+                    //   console.log("ini sesi"+session)
+                    // console.log(response.data)
+                    
+                    req.session = {
+                        passport: {
+                            user: {
+                                access_token: token.access_token,
+                                refresh_token: token.refresh_token,
+                               
+                            }
                         }
                     }
+                     session_to_b = {
+                        passport: {
+                            user: {
+                                access_token: token.access_token,
+                                refresh_token: token.refresh_token,
+                               
+                            }
+                        }
+                     }
+                    if(req.session == null) {
+                        value = {status: true, session: session_to_b}
+                    }
+                    value ={status: true, session: req.session }
+                    // console.log(JSON.stringify(req.session))
                 }
-                // console.log(req.session)
-            }
-
-        })
-        .catch((error) => {
-
-            //   res.sendStatus(401)
-            value = false
-            // console.log(error)
-        });
-
-    return value
-}
-
+    
+            })
+            .catch((error) => {
+    
+                //   res.sendStatus(401)
+                value ={status: false, session: req.session }
+                // console.log(error)
+            });
+    
+        return value
+    }
+    
 const checkToken = async (access_token) => {
     var value;
     var data = qs.stringify({

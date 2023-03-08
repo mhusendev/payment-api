@@ -5,7 +5,7 @@ const apiDoc = {
   basePath:"/api/payment/v1/",
  
   info: {
-    title: "Keycloak app API.",
+    title: "Payment app API.",
     version: "1.0.0",
   },
   securityDefinitions: {

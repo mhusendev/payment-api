@@ -22,8 +22,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
 app.use(cookieSession({
-    name: 'secure-payment',
-    keys: ['secure', 'payment'],
+    name: 'secure-molada',
+    keys: ['secure', 'molada'],
     httpOnly: false
   }))
   app.set('view engine', 'ejs');

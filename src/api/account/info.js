@@ -10,10 +10,11 @@ module.exports = function () {
   
 
     async function GET(req, res, next) {
-      var response = await getAccountData(req)
+    //   var response = await getAccountData(req)
 
       // console.log(respond.status)
-      res.status(response.status).send(response.data)
+      res.send(req.session)
+    //   res.status(response.status).send(response.data)
       // res.send(response)
   }
 

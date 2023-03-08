@@ -26,6 +26,7 @@ passport.use(new LocalStrategy(
        passwordField: "password"
     },
      async function(username, password, done) {
+      // let data = encrypt(salt1,'|username| + password|',salt2)
         var value
         var data = qs.stringify({
             'grant_type': 'password',
