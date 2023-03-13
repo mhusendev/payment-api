@@ -18,4 +18,8 @@ router.post('/login', passport.authenticate('local',{failureRedirect:'/login?fai
   // res.redirect(req.body.domain)
   res.redirect('/api/auth/v1/api-documentation')
 })
+
+router.get('/', (req,res) =>{
+  return res.render('index')
+})
 module.exports = router;

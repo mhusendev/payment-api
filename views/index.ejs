@@ -4,126 +4,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <title>Login Page</title>
-    <style>
-        body {
-       background: -webkit-linear-gradient(bottom, #0c4bb0, #4287f5);
-       background-repeat: no-repeat;
-       background-attachment: fixed;
-
-       }
-        #card {
-        background: #fbfbfb;
-        border-radius: 8px;
-        box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
-        height: fit-content;
-        margin: 6rem auto 8.1rem auto;
-        width: 329px;
-        padding-bottom: 5%;
-}
-#card-content {
-      padding: 12px 44px;
-}
-#card-title {
-      font-family: "Raleway Thin", sans-serif;
-      letter-spacing: 4px;
-      padding-bottom: 23px;
-      padding-top: 13px;
-      text-align: center;
-}
-.underline-title {
-      background: -webkit-linear-gradient(right, #0c4bb0, #4287f5);
-      height: 2px;
-      margin: -1.1rem auto 0 auto;
-      width: 89px;
-}
-a {
-    text-decoration: none;
-}
-label {
-    font-family: "Raleway", sans-serif;
-    font-size: 11pt;
-}
-#forgot-pass {
-    color: #2dbd6e;
-    font-family: "Raleway", sans-serif;
-    font-size: 10pt;
-    margin-top: 3px;
-    text-align: right;
-}
-.form {
-    align-items: left;
-    display: flex;
-    flex-direction: column;
-}
-.form-border {
-    background: -webkit-linear-gradient(right,#0c4bb0, #4287f5);
-    height: 1px;
-    width: 100%;
-}
-.form-content {
-    background: #fbfbfb;
-    border: none;
-    outline: none;
-    padding-top: 14px;
-}
-.submit-btn {
-    background: -webkit-linear-gradient(right,#0c4bb0, #4287f5);
-    border: none;
-    border-radius: 21px;
-    box-shadow: 0px 1px 8px #4287f5;
-    cursor: pointer;
-    color: white;
-    font-family: "Raleway SemiBold", sans-serif;
-    height: 42.3px;
-    margin: 0 auto;
-    margin-top: 50px;
-    transition: 0.25s;
-    width: 153px;
-}
-.submit-btn:hover {
-    box-shadow: 0px 1px 18px #4287f5;
-}
-    </style>
+    <link rel="stylesheet" href="./assets/css/tailwind.css">
+    <title>CWS Payment Gateway</title>
 </head>
 <body>
-    <div id="card">
-        <% if(failed) { %>
-            <div style="padding:3%;background-color: #e6426c; color: #fff;"><%= failed %></div>
-             <br>
-            <div style="width: 100%;align-content: center;display: flex; justify-content: center;">
-                 <button class="submit-btn" onclick="window.location.href ='/login'">BACK TO LOGIN</button> </div>
-            <% } else { %>
-        <div id="card-content">
-            <div id="card-title">
-              <h2>MALLADA</h2>
-              <div class="underline-title"></div>
-            </div>
-            <form method="post" class="form"> 
-                <label for="user-email" style="padding-top:13px">&nbsp;Username</label>
-  <input
-   id="user-email"
-   class="form-content"
-   type="text"
-   name="username"
-   autocomplete="on"
-   required />
-  <div class="form-border"></div>
-<label for="user-password" style="padding-top:22px">&nbsp;Password</label>
-  <input
-   id="user-password"
-   class="form-content"
-   type="password"
-   name="password"
-   required />
-   <input type="text" name="domain" value='<%= domain %>' hidden>
-  <div class="form-border"></div>
-  <input id="submit-btn" class="submit-btn" type="submit" name="submit" value="LOGIN" />
-<!-- <a href="#"><legend id="forgot-pass">Forgot password?</legend></a> -->
-            </form>
-          </div>
-  <% } %>
+   <!-- nav -->
+ 
+
+   <nav class="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+    <div class="container flex flex-wrap items-center justify-between mx-auto">
+    <a href="https://flowbite.com/" class="flex items-center">
+        <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">CWS Payment API</span>
+    </a>
+    <div class="flex md:order-2">
+        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register API</button>
+        <!-- <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+      </button> -->
     </div>
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+     
+    </div>
+    </div>
+  </nav>
+  
+    <div class="w-full h-24 flex justify-center pt-10 mt-24">
+      <a class="bg-slate-900 rounded-md text-white px-5 pt-4" href="/api/payment/v1/api-documentation">View Documentation</a>
+    </div>
+
+  <!--end nav  -->
+
+  <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
 </body>
 </html>

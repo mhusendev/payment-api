@@ -3,8 +3,12 @@ const { json } = require('body-parser');
 var qs = require('qs');
 
 
-
-
+var config_keycloak = {
+    payment_client_id: 'payment',
+    payment_client_secret: 'ErwgeBLn9Xsdz4hB460jWJg2DOyKcbfY',
+    admin_client_id:'admin-cli',
+    admin_client_secret: 'lMOE5VQdPGa9H9ceZtZOAbZ0v6NHNKCu'
+}
 
 
 
@@ -12,8 +16,8 @@ const authKeycloack = async (token) => {
     var value;
     var data = qs.stringify({
         'token': token,
-        'client_id': 'mallada',
-        'client_secret': 'k3gGjmTtLHfBViYunEIAVqCY9hKrbj6q'
+        'client_id': config_keycloak.payment_client_id,
+        'client_secret': config_keycloak.payment_client_secret
     });
     var config = {
         method: 'post',
@@ -38,7 +42,7 @@ const authKeycloack = async (token) => {
             }
         })
         .catch((error) => {
-            console.log(error);
+            console.log("data eror");
             value = false
             //   res.sendStatus(401)
         });
@@ -51,8 +55,8 @@ const getToken = async (req,reftoken) => {
         // console.log(reftoken)
         var data = qs.stringify({
             'refresh_token': reftoken,
-            'client_id': 'mallada',
-            'client_secret': 'k3gGjmTtLHfBViYunEIAVqCY9hKrbj6q',
+            'client_id': config_keycloak.payment_client_id,
+            'client_secret': config_keycloak.payment_client_secret,
             'grant_type': 'refresh_token'
         });
         var config = {
@@ -114,36 +118,7 @@ const getToken = async (req,reftoken) => {
         return value
     }
     
-const checkToken = async (access_token) => {
-    var value;
-    var data = qs.stringify({
-        'token': access_token,
-        'client_id': 'mallada',
-        'client_secret': 'k3gGjmTtLHfBViYunEIAVqCY9hKrbj6q'
-    });
-    var config = {
-        method: 'post',
-        url: 'https://keycloak.cws.co.id/realms/mallada/protocol/openid-connect/token/introspect',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        data: data
-    };
 
-    await axios(config)
-        .then((response) => {
-            let hasil = response.data;
-
-            value = hasil.active
-        })
-        .catch((error) => {
-            console.log(error);
-            value = false
-            //   res.sendStatus(401)
-        });
-
-    return value
-}
 
 const getInfo = async (access_token) => {
     var value;
@@ -183,8 +158,8 @@ const logOut = async (refToken) => {
     var value;
     var data = qs.stringify({
         'refresh_token': refToken,
-        'client_id': 'mallada',
-        'client_secret': 'k3gGjmTtLHfBViYunEIAVqCY9hKrbj6q'
+        'client_id': config_keycloak.payment_client_id,
+        'client_secret': config_keycloak.payment_client_secret
     });
     var config = {
         method: 'post',
@@ -206,36 +181,6 @@ const logOut = async (refToken) => {
     return value
 
 }
-// const selfLogin = async (username, password) => {
-//     var value;
-//     var data = qs.stringify({
-//         'grant_type': 'password',
-//         'username': username,
-//         'password': password,
-//         'client_id': 'mallada',
-//         'client_secret': 'k3gGjmTtLHfBViYunEIAVqCY9hKrbj6q'
-//     });
-//     var config = {
-//         method: 'post',
-//         url: 'https://keycloak.cws.co.id/realms/mallada/protocol/openid-connect/token',
-//         headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded'
-//         },
-//         data: data
-//     }
-
-//     await axios(config)
-//         .then((response) => {
-//             value = response.data
-//         })
-//         .catch((error) => {
-//             console.log(error);
-//             //   res.sendStatus(401)
-//         });
-
-//     return value
-
-// }
 
 const update_password = async (data) => {
     var value ;
@@ -268,8 +213,8 @@ const token_admin = async () => {
     var value;
     var data = qs.stringify({
         'grant_type': 'client_credentials',
-        'client_id': 'admin-cli',
-        'client_secret': 'lMOE5VQdPGa9H9ceZtZOAbZ0v6NHNKCu'
+        'client_id': config_keycloak.admin_client_id,
+        'client_secret': config_keycloak.admin_client_secret
     });
     var config = {
         method: 'post',

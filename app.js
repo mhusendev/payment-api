@@ -29,8 +29,8 @@ app.use(cookieSession({
   app.set('view engine', 'ejs');
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/admin', indexRouter);
-app.use('/', usersRouter);
+app.use('/', indexRouter);
+
 
 mongoose.set('strictQuery', false);
 console.log(process.env.DATABASE_URL_DEV)
@@ -58,7 +58,7 @@ app.use(
   //  },
     swaggerUi.setup(null,{
       swaggerOptions: {
-        url: "http://localhost:3001/api/payment/v1/api-docs",
+        url: "http://localhost:8082/api/payment/v1/api-docs",
       },
     }),
   );
