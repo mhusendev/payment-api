@@ -3,32 +3,38 @@ const validation = require('../keycloak/helper')
 const midleware = async(req) => {
   
     let permission = false;
+    let token ;
+    headers = req.headers['btob'] ? true: false
+    if(headers){
+        token = await validation.useTokensession(req,'token')
+    } else{
+        token = await validation.useTokensession(req,'access_token')
+    }
 
-    let token = await validation.useTokensession(req,'access_token') ? await validation.useTokensession(req,'access_token') : ''
     let userAuth = await keycloack.authKeycloack(token)
+    let auth_to_validation = {
+        status:userAuth,
+        session: {}
+    } 
+    let revalidation = await revalidate(req,auth_to_validation.status)
 
-    let revalidation = await revalidate(req,userAuth)
-   
+    //  console.log(JSON.stringify(req.session))
 
     return revalidation
 }
 
 const revalidate = async(req,userAuth) => {
+
     if(userAuth == false) {
-        let token = await validation.useTokensession(req,'refresh_token') ? await validation.useTokensession(req,'refresh_token') : false
-        // console.log(token) 
+        let token = await validation.useTokensession(req,'refresh_token') ? await validation.useTokensession(req,'refresh_token') : await validation.useTokensession(req,'token')
+
         let regenerate = await keycloack.getToken(req,token)
-        // console.log(regenerate)
-         if(regenerate) {
-            return regenerate
-         } else {
-            req.session = null
-            return  userAuth
-         }
+   
+        return regenerate
         
     
     } else {
-        return userAuth
+        return {status:true,session:{}}
     }
 }
 const register = async(req) => {
