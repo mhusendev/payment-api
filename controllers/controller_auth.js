@@ -61,6 +61,7 @@ const register = async(req) => {
         }
     }
     let query = await keycloack.register(data)
+    // console.log(query)
     if (query.status !== 201) {
         return {status: query.status,data:JSON.stringify((query.data))}
     } else {

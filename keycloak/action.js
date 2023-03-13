@@ -256,7 +256,7 @@ const register = async (data) => {
     // console.log(sendata)
     var config = {
         method: 'post',
-        url: 'https://keycloak.cws.co.id/admin/realms/mallada/users',
+        url: 'https://keycloak.cws.co.id/admin/realms/payment/users',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + tokenadmin

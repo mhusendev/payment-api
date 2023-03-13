@@ -12,8 +12,8 @@ module.exports = function () {
     async function POST(req, res, next) {
        console.log(req.body)
        const query = await register(req)
-      //  console.log(JSON.stringify(query))
-      if(query.status == 201) return res.status(201)
+       console.log(query.status)
+      if(query.status =- 201) return res.sendStatus(201)
        res.status(query.status).send(query);
     }
   
