@@ -2,7 +2,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 var axios = require('axios');
 var qs = require('qs');
-
+const {config_keycloak} = require('./config')
 passport.serializeUser(function(user, done) {
     /*
     From the user take just the id (to minimize the cookie size) and just pass the id of the user
@@ -32,8 +32,8 @@ passport.use(new LocalStrategy(
             'grant_type': 'password',
             'username': username,
             'password': password,
-            'client_id': 'mallada',
-            'client_secret': 'k3gGjmTtLHfBViYunEIAVqCY9hKrbj6q'
+            'client_id': config_keycloak.payment_client_id,
+            'client_secret': config_keycloak.payment_client_secret
         });
         var config = {
             method: 'post',
