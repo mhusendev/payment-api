@@ -39,7 +39,7 @@ const revalidate = async(req,userAuth) => {
 }
 const register = async(req) => {
     let data = {
-        enabled: false,
+        enabled: true,
         username: req.body.username,
         email: req.body.email,
         firstName: req.body.firstName,

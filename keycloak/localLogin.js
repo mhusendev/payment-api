@@ -37,7 +37,7 @@ passport.use(new LocalStrategy(
         });
         var config = {
             method: 'post',
-            url: 'https://keycloak.cws.co.id/realms/mallada/protocol/openid-connect/token',
+            url: 'https://keycloak.cws.co.id/realms/payment/protocol/openid-connect/token',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
