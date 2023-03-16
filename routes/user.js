@@ -1,4 +1,5 @@
 var express = require('express');
+const { isLogedin } = require('../controllers/controller_auth');
 var router = express.Router();
 
 // /* GET users listing. */
@@ -17,5 +18,6 @@ var router = express.Router();
 // router.post('', function(req,res,next){
 //   next()
 // })
-
+// router.get('/api/payment/v1/auth',isLogedin,(req,res,next)=>{next()})
+router.get('/api/payment/v1/account/apikey',isLogedin,(req,res,next)=>{next()})
 module.exports = router;

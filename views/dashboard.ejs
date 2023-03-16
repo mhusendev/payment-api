@@ -75,7 +75,8 @@
             <div class="w-full md:w-1/2 lg:w-1/2 px-5">
               <p>  Access to API</p>
               <hr>
-              <button class="w-fit px-3 py-2 shadow-md bg-slate-800 rounded mt-5">Generate API key</button>
+              <button onclick="generateKey()" class="w-fit px-3 py-2 shadow-md bg-slate-800 rounded mt-5">Generate API key</button>
+             <div id="apikey" class="w-full"></div>
             </div>
 
        </div>
@@ -84,9 +85,37 @@
 
   <!--end nav  -->
 
-  <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
+ 
 </body>
 </html>
 
 <script>
+ const generateKey = ()=> {
+//     var url = 'http://localhost:8080/cart'
+// fetch(url, {
+//   method: 'GET',
+//   credentials:'include',
+// })
+//   .then((response) => response.json())
+//   .then((response) => {
+//     console.log(response);
+//   }).catch((err) => {
+//     console.log(err);
+// });
+    fetch("http://localhost:8082/api/payment/v1/account/apikey",{
+    method: "GET",
+    credentials: 'include',
+  })
+  .then((response) => response.json())
+  .then((data) => {
+      var apibox = document.getElementById('apikey')
+      apibox.className = 'border border-white text-white px-5 mt-5';
+      apibox.innerHTML= data.apikey 
+      console.log(data)
+
+  }).catch((err) => {
+     console.log(err);
+ });
+
+ }   
 </script>

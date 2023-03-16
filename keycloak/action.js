@@ -15,7 +15,7 @@ const authKeycloack = async (token) => {
     });
     var config = {
         method: 'post',
-        url: 'https://keycloak.cws.co.id/realms/mallada/protocol/openid-connect/token/introspect',
+        url: 'https://keycloak.cws.co.id/realms/payment/protocol/openid-connect/token/introspect',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
@@ -71,7 +71,7 @@ const getToken = async (req,reftoken) => {
                 // console.log(response.status)
                 //    console.log(token.status)
                 if (response.status == 400) {
-                    value ={status: false, session: req.session }
+                    value ={status: false, session: {} }
                 } else {
                     //   console.log("ini sesi"+session)
                     // console.log(response.data)
@@ -105,7 +105,8 @@ const getToken = async (req,reftoken) => {
             .catch((error) => {
     
                 //   res.sendStatus(401)
-                value ={status: false, session: req.session }
+                value ={status: false, session: {} }
+                // req.session = null
                 // console.log(error)
             });
     

@@ -8,8 +8,8 @@ module.exports = function () {
   
     async function GET(req, res, next) {
          let getAuth = await midleware(req)
-         if(!getAuth) return res.sendStatus(401)
-         return res.status(200).send({message: 'Authorized'})
+         if(!getAuth.status) {res.sendStatus(401)}
+         else {res.status(200).send({message: 'Authorized'})}
     }
  
 

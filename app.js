@@ -13,7 +13,7 @@ const swaggerUi = require('swagger-ui-express');
 const mongoose = require('mongoose')
 
 var app = express();
-
+const {isLogedin} = require('./controllers/controller_auth')
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -29,6 +29,7 @@ app.use(cookieSession({
   app.set('view engine', 'ejs');
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/', usersRouter);
 app.use('/', indexRouter);
 
 
