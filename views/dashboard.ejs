@@ -8,7 +8,7 @@
     <title>CWS Payment Gateway</title>
     <style>
         .key{
-            width:120px;
+            width:30%;
         }
     </style>
 </head>
@@ -63,7 +63,7 @@
                 <td>: <%= info.app_name %></td>
             </tr>
             <tr>
-                <td class="key">app code</td>
+                <td class="key">app code / id</td>
                 <td>: <%= info.app_code %></td>
             </tr>
             <tr>
@@ -76,12 +76,30 @@
               <p>  Access to API</p>
               <hr>
               <button onclick="generateKey()" class="w-fit px-3 py-2 shadow-md bg-slate-800 rounded mt-5">Generate API key</button>
-             <div id="apikey" class="w-full"></div>
+             <div class="w-full flex">
+                <div id="apikey" class="w-full"></div>
+               
+             </div>
             </div>
 
        </div>
 
+       <div class="w-full bg-slate-900 px-20 py-10 text-white mt-10">
+        <p>Example request: </p>
+        <p class="bg-slate-700 px-10 py-5">
+            let config : {<br>
+               method : 'GET/POST',  <br>
+               headers: {<br>
+               &nbsp;&nbsp; app_id : 'your_app_id',<br>
+               &nbsp;&nbsp; apikey :'your_apikey',<br>
+               &nbsp;&nbsp; content-type : 'application/json'<br>
+               &nbsp;&nbsp; }<br> 
+            }<br>
+            fetch(URL ,config).then(...)
+        </p>
     </div>
+    </div>
+
 
   <!--end nav  -->
 
@@ -90,6 +108,18 @@
 </html>
 
 <script>
+    const copy = () => {
+  // Get the text field
+  var copyText = document.getElementById("copy");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+  
+}
  const generateKey = ()=> {
 //     var url = 'http://localhost:8080/cart'
 // fetch(url, {

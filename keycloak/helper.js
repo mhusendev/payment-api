@@ -119,4 +119,11 @@ async function getInfocustomer(req) {
     return results
 }
 
-module.exports = {useTokensession, parseJwt,getInfocustomer}
+
+const encode = (text) => {
+    return Buffer.from(JSON.stringify(text)).toString('base64')
+}
+const decode = (text) =>{
+    return Buffer.from(text, 'base64').toString('ascii')
+}
+module.exports = {useTokensession, parseJwt,getInfocustomer, encode, decode}

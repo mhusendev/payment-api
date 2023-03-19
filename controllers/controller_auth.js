@@ -1,6 +1,7 @@
 const keycloack  = require('../keycloak/action')
 const validation = require('../keycloak/helper')
 const keygen = require('uuid')
+const Account = require('../models/account')
 const midleware = async(req) => {
   
 
@@ -88,16 +89,48 @@ const register = async(req) => {
 const getAccountData = async (req) => {
     let token = await validation.useTokensession(req,'access_token') ? await validation.useTokensession(req,'access_token') : ''
     var response = await keycloack.getInfo(token)
-    console.log(response)
+    // console.log(response)
     return response
 }
+
+const checkKey = async(data) =>{
+    try {
+        const account = await Account.find({data:data});
+        let result = (account.length >0)? true : false
+        return result
+    } catch (error) {
+        return false
+    }
+
+}
+
 
 const generateKey = async(req)=> {
     let token = await validation.useTokensession(req,'access_token') ? await validation.useTokensession(req,'access_token') : ''
     let response = await keycloack.getInfo(token)
-    let iduser = response.sub
-    let uid = keygen.v4()
-    return {apikey:uid}
+    let responsedata = response.data ? response.data : ''
+    // console.log(response.data)
+    let datauser =  validation.encode(responsedata)
+    let uid =  keygen.v4()
+
+    try{
+        let checkuid = await checkKey(datauser)
+        console.log(checkuid)
+        if(!checkuid) {
+          let data = new Account({apikey:uid, data: datauser})
+          const savedata = await data.save()
+          console.log(savedata)
+          return {apikey:uid}
+        } else {
+            const updatekey = await Account.updateOne({data:datauser}, {$set: {apikey:uid}});
+            console.log('data') 
+            return {apikey:uid}
+        }
+    } catch {
+        console.log('gagal')
+        return ''
+    }
+
 
 }
 

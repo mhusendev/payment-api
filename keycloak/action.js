@@ -55,7 +55,7 @@ const getToken = async (req,reftoken) => {
         });
         var config = {
             method: 'post',
-            url: 'https://keycloak.cws.co.id/realms/mallada/protocol/openid-connect/token',
+            url: 'https://keycloak.cws.co.id/realms/payment/protocol/openid-connect/token',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -107,7 +107,7 @@ const getToken = async (req,reftoken) => {
                 //   res.sendStatus(401)
                 value ={status: false, session: {} }
                 // req.session = null
-                // console.log(error)
+                
             });
     
         return value
@@ -121,7 +121,7 @@ const getInfo = async (access_token) => {
  
         var config = {
             method: 'GET',
-            url: 'https://keycloak.cws.co.id/realms/mallada/protocol/openid-connect/userinfo',
+            url: 'https://keycloak.cws.co.id/realms/payment/protocol/openid-connect/userinfo',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + access_token
