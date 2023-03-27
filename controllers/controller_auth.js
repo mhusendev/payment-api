@@ -36,6 +36,9 @@ const revalidate = async(req,userAuth) => {
         let token = await validation.useTokensession(req,'refresh_token') ? await validation.useTokensession(req,'refresh_token') : await validation.useTokensession(req,'token')
 
         let regenerate = await keycloack.getToken(req,token)
+        if(!regenerate.status) {
+            req.session = null
+        }
         // console.log("ini generate"+JSON.stringify(regenerate))
         return regenerate
         
@@ -111,29 +114,33 @@ const checkKey = async(data) =>{
 const generateKey = async(req)=> {
     let token = await validation.useTokensession(req,'access_token') ? await validation.useTokensession(req,'access_token') : ''
     let response = await keycloack.getInfo(token)
-    let responsedata = response.data ? response.data : ''
+    let responsedata = response.data.error ? false : response.data
     // console.log(response.data)
-    let datauser =  validation.encode(responsedata)
-    let uid =  keygen.v4()
-
-    try{
-        let checkuid = await checkKey(datauser)
-        console.log(checkuid)
-        if(!checkuid) {
-          let data = new Account({apikey:uid, data: datauser})
-          const savedata = await data.save()
-          console.log(savedata)
-          return {apikey:uid}
-        } else {
-            const updatekey = await Account.updateOne({data:datauser}, {$set: {apikey:uid}});
-            console.log('data') 
-            return {apikey:uid}
+     if(responsedata) {
+        let datauser =  validation.encode(responsedata)
+        let uid =  keygen.v4()
+    
+        try{
+            let checkuid = await checkKey(datauser)
+            console.log(checkuid)
+            if(!checkuid) {
+              let data = new Account({apikey:uid, data: datauser})
+              const savedata = await data.save()
+              console.log(savedata)
+              return {apikey:uid}
+            } else {
+                const updatekey = await Account.updateOne({data:datauser}, {$set: {apikey:uid}});
+                console.log('data') 
+                return {apikey:uid}
+            }
+        } catch {
+            console.log('gagal')
+            return ''
         }
-    } catch {
-        console.log('gagal')
+    
+     } else {
         return ''
-    }
-
+     }
 
 }
 

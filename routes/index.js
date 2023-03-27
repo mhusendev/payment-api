@@ -5,6 +5,7 @@ require('../keycloak/localLogin')
 const {parseJwt} = require('../keycloak/helper')
 
 /* GET home page. */
+
 router.get('/login', function(req, res, next) {
   var refer =  req.headers.referer
   if(req.session.isNew) {
@@ -15,7 +16,7 @@ router.get('/login', function(req, res, next) {
   }
 });
 router.post('/login', passport.authenticate('local',{failureRedirect:'/login?failed=Login Gagal'}), function (req, res) {
-  res.send({message:'login sukses'})
+  res.send(req.session)
 })
 
 router.get('/', (req,res) =>{

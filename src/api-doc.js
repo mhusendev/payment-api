@@ -1,5 +1,6 @@
 const account_register = require('./schemas/account/account_register')
 const account_info = require('./schemas/account/account_info')
+const payment_post = require('./schemas/payment/post_payment')
 const apiDoc = {
   swagger: "2.0",
   basePath:"/api/payment/v1/",
@@ -23,5 +24,5 @@ const apiDoc = {
 };
 apiDoc.definitions['account_register'] = account_register
 apiDoc.definitions['account_info'] = account_info
-
+apiDoc.definitions['payment_post'] = payment_post        
 module.exports = apiDoc;

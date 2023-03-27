@@ -29,8 +29,10 @@ app.use(cookieSession({
   app.set('view engine', 'ejs');
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/', usersRouter);
-app.use('/', indexRouter);
+
+const clientRouter = require('./routes/client_router')
+app.use('/', [usersRouter,indexRouter,clientRouter]);
+
 
 
 mongoose.set('strictQuery', false);
