@@ -12,7 +12,7 @@ const isThereAccount = async (apikey, app_id) => {
         let data_account = account.data
         // console.log(data_account)
         let result_data = helper.decode(data_account.toString()) ? helper.decode(data_account.toString()) :''
-        console.log(result_data)
+        
         if (JSON.parse(result_data).app_code === app_id) {
             return true
         } else {

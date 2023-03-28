@@ -8,6 +8,10 @@ const Account = mongoose.Schema({
     data:{
         type: String,
         require: true
+    },
+    app_code: {
+        type: String,
+        require:true
     }
 })
 

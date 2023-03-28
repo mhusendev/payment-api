@@ -124,7 +124,7 @@ const generateKey = async(req)=> {
             let checkuid = await checkKey(datauser)
             console.log(checkuid)
             if(!checkuid) {
-              let data = new Account({apikey:uid, data: datauser})
+              let data = new Account({apikey:uid, data: datauser, app_code:responsedata.app_code})
               const savedata = await data.save()
               console.log(savedata)
               return {apikey:uid}
