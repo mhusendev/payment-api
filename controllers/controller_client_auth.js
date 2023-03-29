@@ -28,16 +28,16 @@ const isThereAccount = async (apikey, app_id) => {
     }
 }
 
-const midleware_auth = async (req, res) => {
+const midleware_auth = async (req, res,next) => {
   let app_id = req.headers.app_id ? req.headers.app_id :''
   let apikey = req.headers.apikey ? req.headers.apikey :''
-
+ console.log(apikey)
   let check_data = await isThereAccount(apikey,app_id)
  
   if(check_data) {
-    res.send({message:'authorize'})
+    next()
   } else {
-    res.send({message:'invalid client id'})
+    res.status(401).send({message:'invalid client id'})
   }
   
 

@@ -91,4 +91,16 @@ const paymentNotification = async (req, res) => {
         
     }
 }
-module.exports = {pay}
+
+const paymentStatus = async (req) => {
+    let snap = await payment.config()
+    snap.transaction.status(req.params['order_id'])
+        .then((response) => {
+            return response
+        }).catch((err) => {
+            console.log(err.ApiResponse)
+            return err
+        });
+}
+
+module.exports = {pay,paymentStatus}

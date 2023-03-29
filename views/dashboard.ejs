@@ -166,6 +166,10 @@
     
     if(response.status == 200) {
         var formapi =  document.getElementById('formapi')
+      
+          if(document.getElementById('divapi')) {
+            document.getElementById('divapi').remove()
+          }
   var divAPi = document.createElement('div')
   divAPi.className  = 'w-full flex'
   divAPi.id = 'divapi'
@@ -181,9 +185,16 @@
   btn_validasi.id ='clickbtn'
   btn_validasi.onclick = validation
   btn_validasi.className = 'rounded shadow-md bg-slate-900 px-3  ml-2'
- 
   divAPi.append(formOTP)
   divAPi.append(btn_validasi)
+  if(document.getElementById('keterangan')){
+    document.getElementById('keterangan').remove()
+  }
+  let keterangan =  document.createElement('p')
+  keterangan.innerHTML= 'Kode OTP telah dikirim ke email , silahkan cek email...'
+  keterangan.id ='keterangan'
+  
+  formapi.append(keterangan)
   formapi.append(divAPi)
   
     }else {

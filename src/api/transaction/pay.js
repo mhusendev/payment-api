@@ -7,9 +7,10 @@ module.exports = function () {
     };
   
     async function POST(req, res, next) {
-        let payment = await paymentController.pay(req)
-        console.log(JSON.stringify(payment))
-        res.send(payment)
+        // let payment = await paymentController.pay(req)
+        // console.log(JSON.stringify(payment))
+        // res.send(payment)
+        res.send('ok')
        
     }
  
@@ -22,6 +23,18 @@ module.exports = function () {
         operationId: "paymentGenerate",
         consumes: ["application/json"],
         parameters: [
+          {
+            in: 'header',
+            name: 'apikey',
+            required: true,
+            type:'string'
+          },
+          {
+            in: 'header',
+            name: 'app_id',
+            required: true,
+            type:'string'
+          },
           {
             in: "body",
             name: "payment",

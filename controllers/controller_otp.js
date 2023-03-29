@@ -1,6 +1,6 @@
 const keycloack  = require('../keycloak/action')
 const helper = require('../keycloak/helper')
-
+const mailer = require('../keycloak/mailer')
 const keygen = require('uuid')
 
 let userOTP = {
@@ -28,6 +28,9 @@ const generateOTP = async(req) => {
     console.log(JSON.stringify(userOTP))
     if(responsedata !== '') {
         // send Email here
+    //  console.log(responsedata.email)
+    let bodyEmail = '<p>Your OTP CODE: <br><h1>'+userOTP.otp+'</h1></p>'
+        mailer.sendEmail(responsedata.email,'OTP ACCESS',bodyEmail)
         return true
     } else {
         return false
