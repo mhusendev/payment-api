@@ -13,8 +13,8 @@ module.exports = function () {
        console.log(req.body)
        const query = await register(req)
        console.log(query.status)
-      if(query.status =- 201) return res.sendStatus(201)
-       res.status(query.status).send(query);
+      if(query.status == 201) { res.sendStatus(201)}
+       else{res.status(query.status).send(query)}
     }
   
 
