@@ -7,10 +7,10 @@ module.exports = function () {
     };
   
     async function POST(req, res, next) {
-        // let payment = await paymentController.pay(req)
-        // console.log(JSON.stringify(payment))
-        // res.send(payment)
-        res.send('ok')
+        let payment = await paymentController.pay(req)
+        console.log(JSON.stringify(payment))
+        res.send(payment)
+        // res.send('ok')
        
     }
  

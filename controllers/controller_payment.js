@@ -1,6 +1,7 @@
 const payment = require('../midtrans/config')
 const Account = require('../models/account')
 const pay = async (req) => {
+  try {
     let parameter = req.body
     let snap = await payment.config()
 
@@ -16,6 +17,13 @@ const pay = async (req) => {
         })
       
         return payload
+    
+  } catch (error) {
+    console.log(error)
+    return false
+
+    
+  }
 }
 
 const paymentNotification = async (req, res) => {
@@ -94,13 +102,15 @@ const paymentNotification = async (req, res) => {
 
 const paymentStatus = async (req) => {
     let snap = await payment.config()
-    snap.transaction.status(req.params['order_id'])
+    let payload = await snap.transaction.status(req.params['order_id'])
         .then((response) => {
             return response
         }).catch((err) => {
             console.log(err.ApiResponse)
             return err
         });
+
+    return payload    
 }
 
 module.exports = {pay,paymentStatus}
